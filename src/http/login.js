@@ -1,15 +1,12 @@
 import axios from "axios";
 
-const signup = async (userData) => {
+const login = async (userData) => {
     const options = {
         method: 'POST',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/signup',
+        url: 'https://good-lime-horse-robe.cyclic.app/v1/login',
         data: {
-            first_name: userData.firstName,
-            last_name: userData.lastName,
             password: userData.password,
             email: userData.email,
-            role: userData.role
         }
     }
 
@@ -21,4 +18,4 @@ const signup = async (userData) => {
     }
 }
 
-export default signup
+export default login

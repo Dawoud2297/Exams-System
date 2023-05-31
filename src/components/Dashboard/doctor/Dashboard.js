@@ -4,21 +4,27 @@ import DiffExams from './DiffExams'
 
 const mockArchive = ['Math', 'Quantum', 'general Physics']
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
     return (
         <div className={daBody.container}>
             <div className={daBody.leftHand}>
                 <div className={daBody.photo}>
                     <img
-                        src='assets/1000_F_569845170_QLp8dKvnDGKTDx1SKRBmB0EAk6fb8sCR.jpg'
+                        src={props.photo ? (
+                            props.photo
+                        ) : (
+                            '/assets/placeholder-doctor.jpg'
+                        )
+                        }
                         height="80"
                         width="80"
                         alt=''
                     />
                     <p>
                         Mahmoud Dawood Dawood <br />
-                        <span>@mahmoudalaa</span>
+                        {/* {} */}
+                        <span>{props.userName}</span>
                     </p>
                 </div>
                 <div className={daBody.leftHandBody}>

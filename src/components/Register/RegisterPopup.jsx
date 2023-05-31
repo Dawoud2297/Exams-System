@@ -50,7 +50,7 @@ const RegisterPopup = (props) => {
         </div>
         <div className={resPop.actions}>
           <button onClick={selected} disabled={!props.identity}>Create Account</button>
-          <p>Already have an account? <Link to='/auth/login'>Log In</Link></p>
+          <p>Already have an account? <Link to='/auth/login' onClick={()=>props.setAuthType('login')}>Log In</Link></p>
         </div>
       </div>
     </div>

@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import examsType from './examsTypes';
 import identity from "./identity";
-import signup from "./signup";
+import auth from "./auth";
 
 export default configureStore({
     reducer : {
         examsType,
         identity,
-        signup
-    }
+        auth
+    },
+    middleware : (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck : false
+    })
 })

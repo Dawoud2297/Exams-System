@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import signup from '../../Styles/Register/Signup.module.css';
 import { Link } from 'react-router-dom';
-import { signupData } from '../../store/signup';
+import { authSignup, selectAuthType } from '../../store/auth';
 import { useDispatch } from 'react-redux';
-
+import { emailErrors } from '../../store/auth';
 
 const Signup = (props) => {
   const [user, setUser] = useState({ firstName: '', lastName: '', email: '', password: '', role: props.identity })
 
   const dispatch = useDispatch();
-
-  console.log(user)
+  // Set default auth_type signup => this function
+  dispatch(selectAuthType('signup'));
+  // Not this: because this function set the auth_type and 
+  // remove any errors so if there any error it'll not appear 
+  // props.setAuthType('signup');
 
   const backward = () => {
     props.setFirstTime(true)
@@ -23,11 +26,12 @@ const Signup = (props) => {
       ...user,
       [name]: value
     });
+    dispatch(emailErrors(''));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupData(user))
+    dispatch(authSignup(user))
   }
 
   return (
@@ -72,6 +76,8 @@ const Signup = (props) => {
             <input
               type='email'
               name='email'
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              title='person123@gmail.com'
               value={user.email}
               onChange={handleChange}
               placeholder='Work email address'
@@ -86,22 +92,36 @@ const Signup = (props) => {
               value={user.password}
               onChange={handleChange}
               placeholder='Password ( 8 or more characters )'
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
               required
             />
           </label>
           {
             props.identity === 'instructor' ? (
               <label className={signup.key}>
-                {/* <input type='text' name='key' placeholder='key' required/> */}
               </label>
             ) : (
               <label className={signup.id}>
-                {/* <input type='text' name='id' placeholder='ID' required/> */}
               </label>
             )
           }
-          <button type='submit' className={signup.submit}>Create Profile</button>
-          <p>Already have an account? <Link to='/auth/login'>Log In</Link></p>
+          <button
+            type='submit'
+            className={`${props.user_auth_error ? signup.userExists : (props.loading ? signup.loading : signup.submit)}`}
+            disabled={props.user_auth_error || props.loading}
+          >
+            {
+              props.user_auth_error ? (
+                <>
+                  &#9888; {props.user_auth_error}...try again
+                </>
+              ) : props.loading ? ('Loading...') : (
+                'Create Acount'
+              )
+            }
+          </button>
+          <p>Already have an account? <Link to='/auth/login' onClick={() => props.setAuthType('login')}>Log In</Link></p>
         </form>
       </div>
     </div>

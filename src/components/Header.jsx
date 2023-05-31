@@ -7,9 +7,13 @@ const Header = (props) => {
   const navigate = useNavigate();
 
   const register = () => {
-    navigate('/signup')
+    navigate('/signup');
+    props.setAuthSignUp('signup');
   }
 
+  const login = () => {
+    props.setAuthSignUp('login');
+  }
   return (
     <div className={header.headerContainer}>
         <div className={header.logo}>
@@ -21,7 +25,7 @@ const Header = (props) => {
             </p>
         </div>
         <div className={header.login}>
-          <Link to="/auth/login" className={header.link}>Log In</Link>
+          <Link to="/auth/login" onClick={login} className={header.link}>Log In</Link>
             <button onClick={register}>Sign Up</button>
         </div>
     </div>

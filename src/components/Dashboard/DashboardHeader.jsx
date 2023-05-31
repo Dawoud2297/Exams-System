@@ -6,7 +6,7 @@ const DashboardHeader = () => {
     return (
         <div className={daHeader.container}>
             <div className={daHeader.logo}>
-            <img src='assets/al-azhar.png' height="55" width="55" alt=''/>
+            <img src='/assets/al-azhar.png' height="55" width="55" alt=''/>
             </div>
             <div className={daHeader.middle}>
                 <p>

@@ -5,32 +5,40 @@ import Login from './components/Login';
 import {
   createBrowserRouter,
   RouterProvider,
-  // Route,
-  // Link,
 } from "react-router-dom";
 import DashboardHome from './components/Dashboard/DashboardHome';
+import identityPath from './helpers/identityPath';
+import { useSelector } from 'react-redux';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
-  {
-    path: '/signup',
-    element: <RegisterHome />
-  },
-  {
-    path: '/auth/login',
-    element: <Login />
-  },
-  {
-    // in-doc-KEY-authedkey
-    path: '/in',
-    element: <DashboardHome/>
-  }
-])
+
 
 function App() {
+
+
+  const { identity } = useSelector((state) => state.identity);
+  const { user_token } = useSelector((state) => state.auth);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />
+    },
+    {
+      path: '/signup',
+      element: <RegisterHome />
+    },
+    {
+      path: '/auth/login',
+      element: <Login />
+    },
+    {
+      // in-doc-KEY-authedkey
+      // path: '/in',
+      path: identityPath(identity, user_token),
+      element: <DashboardHome />
+    }
+  ])
+
   return (
     <div className="App">
       <RouterProvider router={router} />

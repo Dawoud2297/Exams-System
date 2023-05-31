@@ -6,7 +6,10 @@ let styles = {
     sectionTwo: about.section + " " + about.two,
     sectionThree: about.section + " " + about.three
 }
-const About = () => {
+const About = (props) => {
+    const register = () => {
+        props.setAuthSignUp('signup');
+    }
     return (
         <div className={about.aboutContainer}>
             <div className={styles.sectionOne}>
@@ -21,7 +24,7 @@ const About = () => {
                         behind Electrical Engineering,
                         making your learning experience more enriching and rewarding.
                     </p>
-                    <Link to='/signup'>
+                    <Link to='/signup' onClick={register}>
                         <p className={about.explore}>
                             Explore Now
                         </p>
@@ -56,7 +59,7 @@ const About = () => {
                         behind Electrical Engineering,
                         making your learning experience more enriching and rewarding.
                     </p>
-                    <Link to='/signup'>
+                    <Link to='/signup' onClick={register}>
                         <p className={about.explore}>
                             Start Here
                         </p>

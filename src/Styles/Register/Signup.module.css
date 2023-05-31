@@ -127,7 +127,7 @@ button[type="submit"] {
 .submit {
     grid-row: 5;
     grid-column: 3/11;
-    background-color: rgb(13, 138, 13);
+    /* background-color: rgb(13, 138, 13); */
     background: var(--greOff);
     border: none;
     border-radius: 100px;
@@ -138,6 +138,29 @@ button[type="submit"] {
     margin-top: 30px;
 }
 
+.loading {
+    grid-row: 5;
+    grid-column: 3/11;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--inverse);
+    margin-top: 30px;
+}
+
+.userExists {
+    grid-row: 5;
+    grid-column: 3/11;
+    border: none;
+    border-radius: 10px;
+    height: 40px;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--inverse);
+    margin-top: 30px;
+}
 
 .form p {
     grid-row: 6;
