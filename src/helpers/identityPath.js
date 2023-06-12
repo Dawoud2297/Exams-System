@@ -1,20 +1,13 @@
-const identityPath = (identity, user_token) => {
+const identityPath = (user_token, id) => {
 
-    if (identity && user_token) {
+    if (user_token && id) {
         const ind = user_token?.indexOf('.');
         const authPath = user_token?.slice(0, ind);
-        // const authPath = user_token?.slice(ind,ind+5);
-        localStorage.setItem('dashboard-sub-path', JSON.stringify(authPath));
+        localStorage.setItem('dashboard-sub-path', JSON.stringify(`${authPath}${id}`));
     }
     let subPath = JSON.parse(localStorage.getItem('dashboard-sub-path'));
 
-    // if (identity === 'instructor') {
-    // return `/authorized/${subPath}-in`
-    // } else if (identity === 'student') {
-    return `/authorized-id/${subPath}/on-board`
-    // }
-    // return null
-
+    return `/v1/${subPath}/on-board`
 }
 
 export default identityPath

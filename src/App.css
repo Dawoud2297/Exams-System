@@ -1,12 +1,13 @@
 :root {
   --pri: #0275d8;
-  --success : #5cb85c;
-  --info : #5bc0de;
-  --warning : #f0ad4e;
-  --danger : #d9534f;
-  --inverse : #292b2c;
-  --faded : #f7f7f7;
-  --greOff : rgb(13, 138, 13);
+  --success: #5cb85c;
+  --info: #5bc0de;
+  --warning: #f0ad4e;
+  --danger: #d9534f;
+  --inverse: #292b2c;
+  --faded: #f7f7f7;
+  --greOff: rgb(13, 138, 13);
+  --successii: #0f5132;
   --snow: #F5FEFD;
   --dark: #050100;
   /* --crow: #0D0906; */
@@ -54,6 +55,7 @@ li {
 button:hover {
   cursor: pointer;
 }
+
 button:disabled {
   cursor: not-allowed;
 }

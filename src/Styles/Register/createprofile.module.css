@@ -11,10 +11,8 @@
     border: 1px solid rgb(245, 204, 204);
     border-radius: 20px;
     display: grid;
-    /* grid-template-columns: 1fr; */
     grid-template-columns: repeat(12, 1fr);
     gap: 25px;
-    /* margin-bottom: 20px; */
 }
 
 .cardTitle {
@@ -35,7 +33,6 @@
     display: inherit;
     grid-template-columns: inherit;
     gap: 15px;
-    /* background-color: brown; */
 }
 
 .form input,
@@ -48,7 +45,6 @@
     font-weight: 700;
     padding-left: 10px;
     resize: none;
-    /* grid-column: 2/13; */
 }
 
 input:hover {
@@ -60,14 +56,12 @@ input:hover {
     outline-style: none;
     border: none;
     border-bottom: 5px solid rgb(238, 153, 153);
-    /* border-bottom: 5px solid rgb(70, 7, 7); */
 }
 
 .form label {
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;
-    /* font-family: cursive; */
     font-size: 20px;
 }
 

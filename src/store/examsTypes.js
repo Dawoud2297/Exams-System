@@ -1,18 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import examsTypes from "../http/examsTypes";
 
-export const selectExamType = createAsyncThunk('examsType/selectType', async (type, thunkAPI) => {
+export const selectExamType = createAsyncThunk('examsType/selectType', async (typeRequiredData, thunkAPI) => {
+    const { choice, token } = typeRequiredData
     const { rejectWithValue } = thunkAPI;
-    let res = await examsTypes(type);
-    if(res === 'error') rejectWithValue();
-    return res.data;
+    let res = await examsTypes(choice, token);
+    if (res === 'error') rejectWithValue();
+    return res.data.quiz;
 })
 
+const initialState = { examsTypeData: [], loading: false };
 
 const examsType = createSlice({
     name: 'examsType',
-    initialState: { examsTypeData: null, loading: false },
-    reducers: {},
+    initialState,
+    reducers: {
+        logoutDashboard: (state) => {
+            return initialState;
+        }
+    },
     extraReducers: {
         [selectExamType.pending]: (state, action) => {
             state.loading = true;
@@ -27,5 +33,5 @@ const examsType = createSlice({
         }
     }
 });
-
+export const { logoutDashboard } = examsType.actions;
 export default examsType.reducer;

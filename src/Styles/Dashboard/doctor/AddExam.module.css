@@ -1,0 +1,73 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 4;
+    gap: 20px;
+}
+
+/*  */
+.exForm {
+    height: 100vh;
+    grid-row: 1/5;
+    grid-column: 2/13;
+    padding: 10px 10px 0 0;
+    background: greenyellow;
+}
+
+.qbIsOpen {
+    height: 100vh;
+    grid-row: 1/5;
+    grid-column: 2/13;
+    padding: 10px 10px 0 0;
+}
+
+/*  */
+.leftControls {
+    grid-row: 2/4;
+    box-shadow: 10px 0 5px 0 rgba(0, 0, 0, 0.5);
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    background: greenyellow;
+
+}
+
+.leftControls * {
+    cursor: pointer;
+}
+
+.openQB {
+    font-size: 35px;
+}
+
+
+
+.successfully {
+    width: 550px;
+    margin: 25px;
+    margin-left: 450px;
+    border-radius: 20px;
+    background-color: var(--successii);
+    color: var(--faded);
+    padding: 20px;
+    display: grid;
+}
+
+.successfully p {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.successfully button {
+    margin-left: 450px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+
+.container:has(.belongToSuccessed) {
+    display: none;
+}

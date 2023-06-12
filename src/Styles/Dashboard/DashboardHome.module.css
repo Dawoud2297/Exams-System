@@ -4,3 +4,9 @@
     grid-template-columns: 1fr;
     gap: 20px;
 }
+
+.addExams {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 50px;
+}

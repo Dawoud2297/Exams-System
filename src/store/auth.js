@@ -17,27 +17,25 @@ export const authLogin = createAsyncThunk("auth/login", async (data, { rejectWit
         localStorage.setItem('user', JSON.stringify([res.user, res.token]));
     }
     if (!getState().auth.user_auth_error) {
-        localStorage.setItem("additional", JSON.stringify({ id: res.user._id, additional: { user_token: res.token, role: res.user.role } }))
+        localStorage.setItem("additional", JSON.stringify({ id: res.user._id, additional: { user_token: res.token, role: res.user.role, name: `${res.user.first_name} ${res.user.last_name}` } }))
     }
     if (getState().auth.auth_type === 'login') dispatch(setIdentity(res.user.role))
-    // dispatch(useLoginToken(res.token))
-    // console.log(res)
     return res;
 })
 
-
+const initialState = {
+    auth_type: '',
+    user: {},
+    user_token: '',
+    loading: false,
+    user_auth_error: '',
+    keepUserLoggedIn: false,
+    loginDataFulfilled: false,
+    indicator: false
+}
 const signupSlice = createSlice({
     name: "auth",
-    initialState: {
-        auth_type: '',
-        user: {},
-        user_token: '',
-        loading: false,
-        user_auth_error: '',
-        keepUserLoggedIn: false,
-        loginDataFulfilled: false,
-        indicator: false
-    },
+    initialState,
     reducers: {
         endIndicator: (state) => {
             state.indicator = false;
@@ -48,7 +46,6 @@ const signupSlice = createSlice({
         emailErrors: (state, action) => {
             state.user_auth_error = action.payload;
         },
-        // Because errors stuck from login to signup and vice versa
         resetUserProps: (state, action) => {
             state.user_auth_error = '';
         },
@@ -57,6 +54,10 @@ const signupSlice = createSlice({
         },
         signupKeepLogin: (state) => {
             localStorage.setItem('user', JSON.stringify([state.user, state.user_token]));
+        },
+        logout: () => {
+            localStorage.clear();
+            return initialState;
         }
     },
     extraReducers: {
@@ -80,10 +81,10 @@ const signupSlice = createSlice({
         },
         [authLogin.fulfilled]: (state, action) => {
             state.loading = false;
+            state.indicator = true;
             state.user = action.payload?.user;
             state.user_token = action.payload?.token;
             state.loginDataFulfilled = true;
-            state.indicator = true;
             console.log(state.auth)
         },
         [authLogin.rejected]: (state, action) => {
@@ -101,7 +102,8 @@ export const {
     resetUserProps,
     letUserLoggedIn,
     signupKeepLogin,
-    endIndicator
+    endIndicator,
+    logout
 } = signupSlice.actions;
 
 export default signupSlice.reducer;

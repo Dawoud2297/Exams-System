@@ -4,7 +4,7 @@ import vo from '../Styles/Void.module.css'
 const Void = () => {
     return (
         <div className={vo.container}>
-            <p className={vo.void}> VOID </p>
+            <p className={vo.noQuestions}> VOID</p>
         </div>
     )
 }

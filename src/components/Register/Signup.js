@@ -9,11 +9,7 @@ const Signup = (props) => {
   const [user, setUser] = useState({ firstName: '', lastName: '', email: '', password: '', role: props.identity })
 
   const dispatch = useDispatch();
-  // Set default auth_type signup => this function
   dispatch(selectAuthType('signup'));
-  // Not this: because this function set the auth_type and 
-  // remove any errors so if there any error it'll not appear 
-  // props.setAuthType('signup');
 
   const backward = () => {
     props.setFirstTime(true)
@@ -33,6 +29,8 @@ const Signup = (props) => {
     e.preventDefault();
     dispatch(authSignup(user))
   }
+
+  console.log(user)
 
   return (
     <div className={signup.signupContainer}>

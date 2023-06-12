@@ -7,14 +7,19 @@ import identityPath from '../../helpers/identityPath';
 
 const CreateProfile = () => {
   const { user, keepUserLoggedIn, user_token } = useSelector((state) => state.auth);
-  const { identity } = useSelector((state) => state.identity);
-  const [additional, setAdditional] = useState({ userName: '', userPic: '', bio: '', role: user.role });
+  const [additional, setAdditional] = useState({
+    userName: '',
+    userPic: '',
+    bio: '',
+    role: user.role,
+    user_token
+  });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const setLocalUser = () => {
-    let userAdditionalData = { id: user._id, additional }
+    let userAdditionalData = { id: user._id, additional:{...additional,name: `${user.first_name} ${user.last_name}`} }
     localStorage.setItem("additional", JSON.stringify(userAdditionalData))
   }
   const handleChange = (e) => {
@@ -46,11 +51,9 @@ const CreateProfile = () => {
     if (keepUserLoggedIn) {
       dispatch(signupKeepLogin())
     }
-    navigate(identityPath(identity, user_token))
+    navigate(identityPath(user_token, user._id))
   }
 
-  let userImg = JSON.parse(localStorage.getItem('additional'))
-  // console.log(userImg?.additional?.userPic)
   return (
     <div className={cProfile.cProfileContainer}>
       <img src='assets/al-azhar.png' height="150" width="150" alt='' />
@@ -115,11 +118,6 @@ const CreateProfile = () => {
         </form>
       </div>
       <div>
-        <img src={userImg?.additional?.userPic}
-          alt='No'
-          height="80"
-          width="80"
-        />
       </div>
     </div>
   )

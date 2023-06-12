@@ -6,17 +6,21 @@ import indicator from '../Styles/LoadingIndicator.module.css'
 import { endIndicator } from '../store/auth';
 
 const LoadingIndicator = () => {
-    const { identity } = useSelector((state) => state.identity);
-    const { user_token } = useSelector((state) => state.auth);
+    const { auth } = useSelector((state) => state);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+
+
     useEffect(() => {
-        setTimeout(() => {
-            navigate(identityPath(identity, user_token));
-            dispatch(endIndicator())
-        }, 2000)
-    }, [dispatch, identity, navigate, user_token])
+        if (auth.auth_type === 'login')
+            setTimeout(() => {
+                dispatch(endIndicator())
+                navigate(identityPath(auth.user_token, auth.user._id));
+            }, 2000)
+    }, [auth.auth_type, auth.user._id, auth.user_token, dispatch, navigate])
+
+
     return (
         <div className={indicator.container}>
             <div className="logo">

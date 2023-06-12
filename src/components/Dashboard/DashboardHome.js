@@ -1,21 +1,30 @@
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import daHome from '../../Styles/Dashboard/DashboardHome.module.css'
 import DashboardHeader from './DashboardHeader'
 import Dashboard from './doctor/Dashboard'
 import DashboardStu from './student/DashboardStu'
+import { selectAuthType } from '../../store/auth'
 
 
 const DashboardHome = () => {
-    const { identity } = useSelector((state) => state.identity);
-    let localUser = JSON.parse(localStorage.getItem('additional'));
+    const dispatch = useDispatch();
+    dispatch(selectAuthType('authorized'));
+    let localUser = JSON.parse(localStorage.getItem('additional')).additional;
+    let role = localUser.role
+
+    /** */
+    // Tied Route
+    localStorage.setItem('lock-routes', JSON.stringify('pop'))
+    /** */
+
     return (
         <div className={daHome.container}>
-            <DashboardHeader />
+            <DashboardHeader header='DASHBOARD' />
             {
-                identity === 'instructor' ?
+                role === 'instructor' ?
                     <Dashboard
-                        photo={localUser?.additional.userPic}
-                        userName={localUser?.additional.userName}
+                        photo={localUser?.userPic ? `${localUser?.userPic}` : null}
+                        userName={localUser?.userName}
                     /> :
                     <DashboardStu />
             }
