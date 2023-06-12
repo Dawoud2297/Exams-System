@@ -2,7 +2,7 @@
   "name": "1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Dawoud2297.github.io/Exams-System",
+  "homepage": "https://Dawoud2297.github.io/Exams-System/final-act",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
