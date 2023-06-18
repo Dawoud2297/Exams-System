@@ -8,7 +8,9 @@ import createExams from "./createExams";
 import openExamDrSlice from './openExamsFtDr'
 import draftsSlice from './drafts';
 import studentsData from './studentsData'
-
+import studentExam from './studentExam'
+import createProfile from './createProfile'
+import studentSubmission from './studentSubmission'
 export default configureStore({
     reducer: {
         examsType,
@@ -19,7 +21,10 @@ export default configureStore({
         createExams,
         openExamDrSlice,
         draftsSlice,
-        studentsData
+        studentsData,
+        studentExam,
+        createProfile,
+        studentSubmission
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

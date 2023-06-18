@@ -4,6 +4,7 @@ import cProfile from '../../Styles/Register/createprofile.module.css';
 import { letUserLoggedIn, signupKeepLogin } from '../../store/auth';
 import { useNavigate } from 'react-router-dom';
 import identityPath from '../../helpers/identityPath';
+import { createProfileReq } from '../../store/createProfile';
 
 const CreateProfile = () => {
   const { user, keepUserLoggedIn, user_token } = useSelector((state) => state.auth);
@@ -19,7 +20,7 @@ const CreateProfile = () => {
   const dispatch = useDispatch();
 
   const setLocalUser = () => {
-    let userAdditionalData = { id: user._id, additional:{...additional,name: `${user.first_name} ${user.last_name}`} }
+    let userAdditionalData = { id: user._id, additional: { ...additional, name: `${user.first_name} ${user.last_name}` } }
     localStorage.setItem("additional", JSON.stringify(userAdditionalData))
   }
   const handleChange = (e) => {
@@ -45,9 +46,18 @@ const CreateProfile = () => {
       });
     }
   }
+
+  const profileData = {
+    photo: additional.userPic,
+    bio: additional.bio,
+    userName: additional.userName,
+    token: additional.user_token
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLocalUser();
+    dispatch(createProfileReq(profileData))
     if (keepUserLoggedIn) {
       dispatch(signupKeepLogin())
     }

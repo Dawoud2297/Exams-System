@@ -1,15 +1,19 @@
 .container {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     grid-column: 4/13;
-    padding: 10px;
+    padding: 0 10px 10px 10px;
     display: grid;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    height: 40em;
 }
 
 .choices {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin: 20px 0;
+    position: sticky;
+    top: 0;
+    background: var(--faded);
+    padding: 15px;
 }
 
 .choices ul {

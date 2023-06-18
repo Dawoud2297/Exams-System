@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { sharedUrl } from './url-share';
 
 
 const openExamsDr = async(id) =>{
     const options = {
         method:"GET",
-        url : `https://good-lime-horse-robe.cyclic.app//v1/quiz/${id}`, 
+        url : `${sharedUrl}/v1/quiz/${id}`, 
     }
     try {
         const res = await axios.request(options);

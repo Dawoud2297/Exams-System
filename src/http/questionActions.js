@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { sharedUrl } from './url-share'
 
 
 
@@ -24,7 +25,7 @@ export const addQuestion = async (questionData, type) => {
 
     const options = {
         method: 'POST',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/questions',
+        url: `${sharedUrl}/v1/questions`,
         data: type === 'open_ended' ? open_ended : multi_data,
         headers: {
             Authorization: `Bearer ${token}`
@@ -41,11 +42,10 @@ export const addQuestion = async (questionData, type) => {
     }
 }
 
-// https://good-lime-horse-robe.cyclic.app/v1/question/647f968132615a3d09b7ecb3
 export const deleteQuestion = async (id) => {
     const options = {
         method: 'DELETE',
-        url: `https://good-lime-horse-robe.cyclic.app/v1/question/${id}`,
+        url: `${sharedUrl}/v1/question/${id}`,
     }
     try {
         let res = await axios.request(options);

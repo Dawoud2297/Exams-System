@@ -1,10 +1,11 @@
 import axios from "axios";
+import { sharedUrl } from "./url-share";
 
 
 const examsTypes = async (examType,tokenExamsTypes) => {
     const options = {
         method: 'GET',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/quizbycategory',
+        url: `${sharedUrl}/v1/quizbycategory`,
         params: {
             category: examType
         },

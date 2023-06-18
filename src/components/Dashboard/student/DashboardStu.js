@@ -1,10 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import daBody from '../../../Styles/Dashboard/student/Dashboard.module.css'
 import QuestionBank from '../QuestionBank'
+import { useDispatch, useSelector } from 'react-redux'
+import { createProfileReq } from '../../../store/createProfile'
+import { totalStudentsExamsReq } from '../../../store/studentSubmission'
+import Void from '../../Void'
+import { useNavigate } from 'react-router-dom'
+import identityPath from '../../../helpers/identityPath'
+import sortByDate from '../../../helpers/sortByDate'
+
 const DashboardStu = (props) => {
+  const userAdditional = JSON.parse(localStorage.getItem('additional'));
+  const userId = userAdditional?.id, user_token = userAdditional?.additional?.user_token
+  const { totalStuExams } = useSelector((state) => state.studentSubmission)
+
+  const initialState = () => {
+    return { userName: '', bio: '', userPic: '', user_token }
+  }
+
   const [questionBank, setQuestionBank] = useState(false)
+  const [editProfile, setEditProfile] = useState(false)
+  const [editProfileData, setEditProfileData] = useState(initialState)
+
+  const dispatch = useDispatch()
+
+
+
+  useEffect(() => {
+    dispatch(totalStudentsExamsReq(user_token))
+  }, [dispatch, user_token])
+
+
 
   const questionsBank = () => {
+
     setQuestionBank(true)
     window.scrollTo({
       top: 0,
@@ -13,58 +42,144 @@ const DashboardStu = (props) => {
     });
   }
 
+  const editProfileMode = () => {
+    setEditProfile(!editProfile)
+  }
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    setEditProfileData({
+      ...editProfileData,
+      [name]: value
+    })
+  }
+
+
+
+  const profileData = {
+    photo: editProfileData.userPic,
+    bio: editProfileData.bio,
+    userName: editProfileData.userName,
+    token: editProfileData.user_token
+  }
+
+
+  const handleSubmit = () => {
+    dispatch(createProfileReq(profileData))
+    setEditProfile(false)
+    setEditProfileData(initialState)
+  }
+
+  const naivgate = useNavigate();
+  const openExam = (id) => {
+    localStorage.setItem('openExamId', JSON.stringify(id))
+    naivgate(`${identityPath(user_token, userId)}/exam`)
+  }
+
+  let sortedData = totalStuExams ? sortByDate(totalStuExams) : [];
+
+
   return (
-    <div className={daBody.container}>
-      <div className={daBody.leftHand}>
-        <div className={daBody.photo}>
-          <img
-            src={props.photo ? (
-              props.photo
-            ) : (
-              '/assets/placeholder-doctor.jpg'
-            )
+    <>
+      {
+        <div className={daBody.container}>
+          <div className={daBody.leftHand}>
+            <div className={daBody.photo}>
+              <img
+                // src={props.photo ? (
+                //   props.photo
+                // ) : (
+                //   '/assets/placeholder-doctor.jpg'
+                // )
+                // }
+                src='/assets/placeholder-doctor.jpg'
+                height="80"
+                width="80"
+                alt='!!'
+                title={props.email}
+              />
+              <p
+                title={props.email}
+              >
+                {props.firstName} {props.lastName} <br />
+                {
+                  editProfile ?
+                    <input
+                      type='text'
+                      name='userName'
+                      value={editProfileData.userName}
+                      onChange={handleChange}
+                    /> : <span>{props.userName}</span>
+                }
+              </p>
+              <div
+                onClick={editProfileMode}
+                title='Edit Profile'
+              >
+                {
+                  editProfile ? <>&#128473;</> : <>&#x270E;</>
+                }
+              </div>
+            </div>
+            <div className={daBody.leftHandBody}>
+              <div className={daBody.bio}>
+                {
+                  editProfile ? <textarea
+                    type='text'
+                    name="bio"
+                    value={editProfileData.bio}
+                    onChange={handleChange}
+                    maxLength="419"
+                  ></textarea> : <p>
+                    {props.bio}
+                  </p>
+                }
+                {
+                  editProfile && <button onClick={handleSubmit}>Submit</button>
+                }
+              </div>
+              <p className={daBody.stCode}>Student Code: {props.stCode}</p>
+              <div className={daBody.otherShortHands}>
+                <div className={daBody.line}></div>
+                <ul>
+                  <li onClick={questionsBank}>Questions Bank</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className={daBody.block}>
+            <p>BLOCK1</p>
+            <p>BLOCK1</p>
+            <p>BLOCK1</p>
+            <p>BLOCK1</p>
+            <p>BLOCK1</p>
+          </div>
+          <div className={daBody.studetnExams}>
+            <div className={daBody.studetnExamsDataHeader}>
+              <p>Exam</p>
+              <p>Title</p>
+              <p>Description</p>
+              <p>Score</p>
+            </div>
+            {
+              totalStuExams?.length ? (sortedData?.map((tse) => (
+                <div onClick={() => openExam(tse._id)} className={daBody.studetnExamsDataBody}>
+                  <p>{tse.category}</p>
+                  <p>{tse.title}</p>
+                  <p>{tse.description}</p>
+                  <p>{tse.score}</p>
+                </div>
+              ))) : (
+                <Void />
+              )
             }
-            height="80"
-            width="80"
-            alt='!!'
-          />
-          <p>
-            Mahmoud Dawood Dawood <br />
-            {/* {} */}
-            <span>{props.userName}</span>
-          </p>
-        </div>
-        <div className={daBody.leftHandBody}>
-          <div className={daBody.bio}>
-            <p>
-              Enim aliqua adipisicing velit magna adipisicing ad dolore amet.
-              Qui nostrud enim labore amet veniam tempor reprehenderit do amet exercitation.
-              Deserunt amet adipisicing sunt ut officia ea aliquip in incididunt laboris commodo.
-              Ex eiusmod elit fugiat eiusmod aliqua. Exercitation qui velit cillum Lorem sunt eiusmod et incididunt.
-              Laboris sit commodo officia fugiat officia qui non duis ut. Culpa elit magna enim reprehe
-            </p>
           </div>
-          <div className={daBody.line}></div>
-          <div className={daBody.otherShortHands}>
-            <ul>
-              <li onClick={questionsBank}>Questions Bank</li>
-            </ul>
+          <div className={questionBank ? daBody.qbOn : daBody.qbOff}>
+            <QuestionBank setQuestionBank={setQuestionBank} />
           </div>
         </div>
-      </div>
-      <div className={daBody.addExams}>
-        <h1>Place holder1</h1>
-      </div>
-      <div className={daBody.archive}>
-        <h1>Place holder2</h1>
-      </div>
-      <div className={daBody.stuGrade}>
-        <h1>Place holder3</h1>
-      </div>
-      <div className={questionBank ? daBody.qbOn : daBody.qbOff}>
-        <QuestionBank setQuestionBank={setQuestionBank} />
-      </div>
-    </div>
+      }
+    </>
   )
 }
 

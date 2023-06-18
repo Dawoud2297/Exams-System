@@ -100,7 +100,8 @@ const Login = (props) => {
                                 >
                                     {
                                         user_auth_error ? (
-                                            user_auth_error
+                                            user_auth_error === 'Operation `users.findOne()` buffering timed out after 10000ms' ? 'Server Is Down Now' :
+                                                user_auth_error
                                         ) : loading ? (
                                             'Loading...'
                                         ) : (

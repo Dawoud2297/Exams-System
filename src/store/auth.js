@@ -4,7 +4,6 @@ import login from "../http/login";
 import { setIdentity } from "./identity";
 
 export const authSignup = createAsyncThunk("auth/data", async (data, { rejectWithValue, getState }) => {
-    console.log(getState().auth.auth_type)
     const res = await signup(data);
     if (res.Error) return rejectWithValue(res.Error);
     return res;
@@ -73,7 +72,6 @@ const signupSlice = createSlice({
         [authSignup.rejected]: (state, action) => {
             state.loading = false;
             state.user_auth_error = action.payload;
-            console.log(action);
         },
         [authLogin.pending]: (state, action) => {
             state.loading = true;
@@ -85,13 +83,11 @@ const signupSlice = createSlice({
             state.user = action.payload?.user;
             state.user_token = action.payload?.token;
             state.loginDataFulfilled = true;
-            console.log(state.auth)
         },
         [authLogin.rejected]: (state, action) => {
             state.loading = false;
             state.loginDataFulfilled = false;
             state.user_auth_error = action.payload;
-            console.log(action.payload)
         },
     }
 })

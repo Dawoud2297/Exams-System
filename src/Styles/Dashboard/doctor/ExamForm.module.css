@@ -105,10 +105,8 @@ body:has(.controls) {
     grid-column: 1/13;
     grid-row: 1;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
-    /* background-color: yellow; */
     cursor: pointer;
     margin: 0 0 15px 0;
-    /* align-items: center; */
     font-weight: 700;
     color: var(--danger);
     float: right;

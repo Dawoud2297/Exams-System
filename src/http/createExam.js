@@ -1,13 +1,14 @@
 import axios from "axios";
+import { sharedUrl } from "./url-share";
 
 const createExam = async (examData, examQuestions, token) => {
     let options = {
         method: 'POST',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/quiz',
+        url: `${sharedUrl}/v1/quiz`,
         data: {
             description: examData.description,
             title: examData.title,
-            category: examData.category,                   // String ['quiz', 'final', 'mid_term']
+            category: examData.category,
             status: examData.status,
             questions: examQuestions
         },

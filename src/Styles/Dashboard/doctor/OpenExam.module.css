@@ -19,7 +19,7 @@
 .examData {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 10px 10px 10px rgba(226, 219, 219, 0.5);
     padding: 1em;
 }
 
@@ -42,6 +42,7 @@
     float: right;
     margin-left: auto;
 }
+
 
 .questionsContainer {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
@@ -83,4 +84,126 @@
     margin-top: -15px;
     grid-column: 1/13;
     color: var(--inverse);
+}
+
+
+.examTimeContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+}
+
+.examHeaderExaTime {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    padding: 15px;
+}
+
+.titleAndDes {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    align-items: center;
+}
+
+.titleAndDes p {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.titleAndDes span {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.examDataExamTime {
+    display: grid;
+    grid-template-columns: 3fr 3fr 1fr 1fr;
+    align-items: center;
+    box-shadow: 10px 10px 10px 10px rgba(226, 219, 219, 0.5);
+    padding: 1em;
+}
+
+.examDataExamTime * {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.examDataExamTime button{
+    background: var(--inverse);
+    color: var(--faded);
+    padding: 0.5em;
+    font-size: 17px;
+    border-radius: 5px;
+}
+
+
+
+.examHeaderExaTime h1 {
+    margin: 0;
+}
+
+.questionsContainerExaTime {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border: none;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 30px;
+    height: 100%;
+}
+
+.questionExamTime {
+    grid-column: 1/6;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 2em;
+    border-right: 1px solid rgba(0, 0, 0, 0.151);
+}
+
+.questionExamTime p:nth-child(1) {
+    color: var(--inverse);
+    font-weight: 500;
+}
+
+.questionExamTime p {
+    margin-bottom: 2em;
+}
+
+.optionsExamTime {
+    grid-column: 6/13;
+    padding: 15px;
+}
+
+
+.optionsExamTime ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+
+}
+
+
+.optionsExamTime li {
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
+
+    padding: 2.5em;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.optionsExamTime li:hover {
+    background: rgba(206, 105, 105, 0.5);
+
+}
+
+.selected {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.quesFinished{
+    grid-column: 5/12;
+    font-size: 25px;
 }

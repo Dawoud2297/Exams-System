@@ -40,18 +40,15 @@ const questionActions = createSlice({
             state.addition_is_done = false
         },
         [addQuestionUThunk.fulfilled]: (state, action) => {
-            console.log('From Fulfilled: ', action.payload)
             state.addition_is_done = true;
         },
         [addQuestionUThunk.rejected]: (state, action) => {
             state.addition_is_done = false;
-            console.log('From Rejected: ', action.payload)
         },
         [deleteQuestionUThunk.pending]: (state, action) => {
             state.deletion_is_done = false;
         },
         [deleteQuestionUThunk.fulfilled]: (state, action) => {
-            console.log('Deleted ', action.payload);
             state.deletion_is_done = true;
         },
         [deleteQuestionUThunk.rejected]: (state, action) => {

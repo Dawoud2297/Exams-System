@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { sharedUrl } from './url-share';
 
 const questionsBank = async (lecture_num) => {
     const options = {
         method: 'GET',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/questionsbank',
+        url: `${sharedUrl}/v1/questionsbank`,
         params: {
             "no": lecture_num
         }

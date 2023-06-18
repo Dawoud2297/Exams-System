@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
         return <Navigate to="/" />
     }
     return (
-            <Outlet />
+        <Outlet />
     )
 }
 

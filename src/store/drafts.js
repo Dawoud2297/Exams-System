@@ -16,7 +16,6 @@ export const getDraftReq = createAsyncThunk("/draftsSlcie/getDraftReq", async (i
 export const updateDraftReq = createAsyncThunk("/draftsSlcie/updateDraftReq", async (dataIsUpdated, { rejectWithValue }) => {
     const { id, updatedDate, token } = dataIsUpdated;
     const res = await updateDraft(id, updatedDate, token);
-    console.log(res);
     return res
 })
 
@@ -54,12 +53,10 @@ const draftsSlice = createSlice({
         },
         [getDraftReq.rejected]: (state, action) => {
             state.loading = false;
-            console.log(action.payload)
         },
         [updateDraftReq.pending]: (state) => {
         },
         [updateDraftReq.fulfilled]: (state, action) => {
-            console.log("from store Actions", action.payload)
             localStorage.removeItem('draftData')
         }
     }

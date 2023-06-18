@@ -7,18 +7,28 @@ import identityPath from '../../../helpers/identityPath'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCategory, setExamMode } from '../../../store/createExams'
 import { getDraftReq, getDraftsReq, setDraftEditor, turnOnLoading } from '../../../store/drafts'
+import { createProfileReq, getProfileReq } from '../../../store/createProfile'
+import CountdownTimer from '../../CountDown'
 
 const userAdditional = JSON.parse(localStorage.getItem('additional'))
 const id = userAdditional?.id, user_token = userAdditional?.additional?.user_token;
 
 
 const Dashboard = (props) => {
+
+    const initialState = () => {
+        return { userName: '', bio: '', userPic: '', user_token }
+    }
+
     const [questionBank, setQuestionBank] = useState(false)
+    const [editProfile, setEditProfile] = useState(false)
+    const [editProfileData, setEditProfileData] = useState(initialState)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
 
     const { drafts, loading } = useSelector((state) => state.draftsSlice)
+    const { exam } = useSelector((state) => state.studentExam)
 
     const questionsBank = () => {
         setQuestionBank(true)
@@ -54,7 +64,6 @@ const Dashboard = (props) => {
             }
         }, 2000)
         return () => {
-            // misleading only
             if (JSON.parse(localStorage.getItem('dD'))) {
                 navigate(`${identityPath(user_token, id)}`)
             }
@@ -65,6 +74,33 @@ const Dashboard = (props) => {
     console.log(drafts)
 
 
+    const editProfileMode = () => {
+        setEditProfile(!editProfile)
+    }
+
+
+    const handleChange = (e) => {
+        let { name, value } = e.target;
+        setEditProfileData({
+            ...editProfileData,
+            [name]: value
+        })
+    }
+
+
+    const profileData = {
+        photo: editProfileData.userPic,
+        bio: editProfileData.bio,
+        userName: editProfileData.userName,
+        token: editProfileData.user_token
+    }
+
+    const handleSubmit = () => {
+        dispatch(createProfileReq(profileData))
+        setEditProfile(false)
+        // dispatch(getProfileReq())
+        setEditProfileData(initialState)
+    }
 
     const token = JSON.parse(localStorage.getItem('additional'))?.additional?.user_token;
     useEffect(() => {
@@ -77,36 +113,61 @@ const Dashboard = (props) => {
     const openStudentsData = () => {
         navigate(`${identityPath(user_token, id)}/students-data`)
     }
-
-
+    console.log(exam)
     return (
         <div className={daBody.container}>
             <div className={daBody.leftHand}>
                 <div className={daBody.photo}>
                     <img
-                        src={props?.photo !== null ? props.photo : '/assets/placeholder-doctor.jpg'}
+                        // src={props?.photo !== null ? props.photo : '/assets/placeholder-doctor.jpg'}
+                        src='/assets/placeholder-doctor.jpg'
                         height="80"
                         width="80"
                         alt='!!'
+                        title={props.email}
                     />
-                    <p>
-                        Mahmoud Dawood Dawood <br />
-                        {/* {} */}
-                        <span>{props.userName}</span>
+                    <p
+                        title={props.email}
+                    >
+                        {props.firstName} {props.lastName} <br />
+                        {
+                            editProfile ?
+                                <input
+                                    type='text'
+                                    name='userName'
+                                    value={editProfileData.userName}
+                                    onChange={handleChange}
+                                /> : <span>{props.userName}</span>
+                        }
                     </p>
+                    <div
+                        onClick={editProfileMode}
+                        title='Edit Profile'
+                    >
+                        {
+                            editProfile ? <>&#128473;</> : <>&#x270E;</>
+                        }
+                    </div>
                 </div>
                 <div className={daBody.leftHandBody}>
                     <div className={daBody.bio}>
-                        <p>
-                            Enim aliqua adipisicing velit magna adipisicing ad dolore amet.
-                            Qui nostrud enim labore amet veniam tempor reprehenderit do amet exercitation.
-                            Deserunt amet adipisicing sunt ut officia ea aliquip in incididunt laboris commodo.
-                            Ex eiusmod elit fugiat eiusmod aliqua. Exercitation qui velit cillum Lorem sunt eiusmod et incididunt.
-                            Laboris sit commodo officia fugiat officia qui non duis ut. Culpa elit magna enim reprehe
-                        </p>
+                        {
+                            editProfile ? <textarea
+                                type='text'
+                                name="bio"
+                                value={editProfileData.bio}
+                                onChange={handleChange}
+                                maxLength="419"
+                            ></textarea> : <p>
+                                {props.bio}
+                            </p>
+                        }
+                        {
+                            editProfile && <button onClick={handleSubmit}>Submit</button>
+                        }
                     </div>
-                    <div className={daBody.line}></div>
                     <div className={daBody.otherShortHands}>
+                        <div className={daBody.line}></div>
                         <ul>
                             <li onClick={questionsBank}>Questions Bank</li>
                             <li onClick={openStudentsData}>Students</li>
@@ -114,6 +175,27 @@ const Dashboard = (props) => {
                     </div>
                 </div>
             </div>
+            {
+                exam &&
+                <div className={daBody.published}>
+                    <div className={daBody.publishedInner}>
+                        <h4>Published Exam</h4>
+                        <div className={daBody.relation}></div>
+                        <p className={daBody.title}>
+                            {exam.title}
+                        </p>
+                        <p className={daBody.description}>
+                            {exam.description}
+                        </p>
+                        <p className={daBody.category}>
+                            {exam?.category}
+                        </p>
+                        <p className={daBody.countdown}>
+                            <CountdownTimer />
+                        </p>
+                    </div>
+                </div>
+            }
             <div className={daBody.addExams}>
                 <div>
                     <h2>Create &#128073;
@@ -129,28 +211,28 @@ const Dashboard = (props) => {
             <div className={daBody.archive}>
                 <div className={daBody.draftsHeader}>Drafts &#9203;</div>
                 {
-                    loading ? (
-                        <div className={daBody.loader}></div>
-                    ) : (
 
-                        drafts?.length > 0 && drafts?.map((draft) => (
-                            <button className={daBody.draft} disabled={loading} onClick={() => editDraft(draft._id)}>
-                                <div className={daBody.draftHeader}>
-                                    <p>{draft.title}</p>
-                                    <p>{draft.category}</p>
-                                </div>
-                                <p>{draft.description}</p>
+                    drafts?.length ?
+                        (
+                            loading ? (
+                                <div className={daBody.loader}></div>
+                            ) : (
+
+                                drafts?.length > 0 && drafts?.map((draft) => (
+                                    <button className={daBody.draft} disabled={loading} onClick={() => editDraft(draft._id)}>
+                                        <div className={daBody.draftHeader}>
+                                            <p>{draft.title}</p>
+                                            <p>{draft.category}</p>
+                                        </div>
+                                        <p>{draft.description}</p>
 
 
-                            </button>
-                        ))
-                    )
+                                    </button>
+                                ))
+                            )
+                        ) : (<p className={daBody.noArch}>No Drafts</p>)
                 }
             </div>
-            <div className={daBody.stuGrade}>
-                <h1>Students Grades</h1>
-            </div>
-
             <div className={questionBank ? daBody.qbOn : daBody.qbOff}>
                 <QuestionBank setQuestionBank={setQuestionBank} />
             </div>

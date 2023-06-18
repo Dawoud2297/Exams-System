@@ -1,10 +1,11 @@
 import axios from 'axios'
+import { sharedUrl } from './url-share';
 
 
 export const getDrafts = async (tokenGetDraft) => {
     const options = {
         method: 'GET',
-        url: "https://good-lime-horse-robe.cyclic.app/v1/archive/all",
+        url: `${sharedUrl}/v1/archive/all`,
         headers: {
             Authorization: `Bearer ${tokenGetDraft}`,
         }
@@ -22,7 +23,7 @@ export const getDrafts = async (tokenGetDraft) => {
 export const getDraft = async (id) => {
     const options = {
         method: "GET",
-        url: `https://good-lime-horse-robe.cyclic.app/v1/archive/one/${id}`
+        url: `${sharedUrl}/v1/archive/one/${id}`
     }
     try {
         const res = await axios.request(options);
@@ -35,7 +36,7 @@ export const getDraft = async (id) => {
 export const updateDraft = async (id, updatedData, token) => {
     const options = {
         method: "PUT",
-        url: `https://good-lime-horse-robe.cyclic.app/v1/archive/change_status/${id}`,
+        url: `${sharedUrl}/v1/archive/change_status/${id}`,
         data: {
             "status": updatedData.status,
             "questions": updatedData.questions

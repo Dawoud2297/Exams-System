@@ -1,9 +1,10 @@
 import axios from "axios";
+import { sharedUrl } from "./url-share";
 
 const login = async (userData) => {
     const options = {
         method: 'POST',
-        url: 'https://good-lime-horse-robe.cyclic.app/v1/login',
+        url: `${sharedUrl}/v1/login`,
         data: {
             password: userData.password,
             email: userData.email,

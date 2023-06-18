@@ -1,0 +1,1 @@
+export const sharedUrl= "https://tiny-sandals-hare.cyclic.app";

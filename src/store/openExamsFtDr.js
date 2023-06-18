@@ -33,7 +33,6 @@ const openExamDrSlice = createSlice({
         [openExamDrReq.fulfilled]: (state, action) => {
             state.loading = false;
             state.openedExam = action.payload;
-            console.log(action.payload);
         },
         [openExamDrReq.rejected]: (state, action) => {
             state.loading = false;

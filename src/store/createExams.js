@@ -41,7 +41,6 @@ const createExams = createSlice({
         },
         [createExamReq.fulfilled]: (state, action) => {
             state.createdSuccefully = true;
-            console.log(action.payload)
             localStorage.removeItem('examMode')
         },
         [createExamReq.rejected]: (state, action) => {
